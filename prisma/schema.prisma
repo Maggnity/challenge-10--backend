@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tasks {
+  id          Int     @id @default(autoincrement())
+  title       String? @db.VarChar(45)
+  description String? @db.VarChar(45)
+  startDate   String? @db.VarChar(45)
+  endDate     String? @db.VarChar(45)
+  status      String? @db.VarChar(45)
+}
+
+model tasks_category {
+  id             Int    @id @default(autoincrement())
+  category_value String @db.VarChar(45)
+  category_text  String @db.VarChar(45)
+}
+
+model tasks_status {
+  id           Int     @id @default(autoincrement())
+  status_value String? @db.VarChar(45)
+  status_text  String? @db.VarChar(45)
+}
