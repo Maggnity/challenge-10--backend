@@ -5,6 +5,7 @@ import { TaskRepository } from "../repository/TaskRepository"
 import { PostTask } from "../useCases/tasks/PostTaskUseCase"
 import { GetTaskCategories } from "../useCases/tasksCategories/GetTaskCategories"
 import { PostCategoryTaskUseCase } from "../useCases/tasksCategories/PostCategoryTask"
+import { GetTaskStatus } from "../useCases/tasksStatus/GetTaskStatusUseCase"
 
 export const TaskRouter = () => {
 
@@ -20,6 +21,8 @@ export const TaskRouter = () => {
     //const puttTasksCategories =  new PutTasksCategories(repo)
     //const deleteTasksCategories =  new DeleteTasksCategories(repo)
 
+    const getStatusTask = new GetTaskStatus(repo)
+
 
     const controller = new TaskController(
         getTasks,
@@ -27,6 +30,8 @@ export const TaskRouter = () => {
 
         getTaskCategories,
         postTasksCategories,
+
+        getStatusTask
         //puttTasksCategories,
         // deleteTasksCategories
     )
@@ -36,11 +41,10 @@ export const TaskRouter = () => {
 
     routes.get('/task-categories', (req, res) => controller.getCategoriesTask(req, res))
     routes.post('/task-category', (req, res) => controller.postCategoryTask(req, res))
-    
-    
     //routes.put('/task-category', (req, res) => controller.postTaskCategories(req, res))
     //routes.delete('/task-category', (req, res) => controller.postTaskCategories(req, res))
 
+    routes.get('/task-status', (req, res) => controller.getStatusTask(req, res))
 
     return routes
 

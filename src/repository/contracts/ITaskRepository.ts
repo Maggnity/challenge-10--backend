@@ -1,3 +1,4 @@
+import { tasks_status } from "@prisma/client";
 import { CategoryTask, Task, TaskDTO } from "../../Entities/Tasks";
 
 export class ITaskRepository {
@@ -8,5 +9,8 @@ export class ITaskRepository {
 
     getCategoryTasks: () => Promise<{ data: CategoryTask[], results: number }>
     addCategoryTask: (data: CategoryTask) => Promise<CategoryTask>
+
+
+    getStatusTasks: () => Promise<{data: tasks_status[], results: number}>
 
 }

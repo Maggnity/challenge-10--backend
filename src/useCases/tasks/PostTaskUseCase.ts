@@ -12,7 +12,6 @@ export class PostTask implements IPostTaskUseCase {
     async execute(data:TaskDTO): Promise<Task> {
         try {
 
-
             const tasks = await this.taskRepository.postTask(data)
 
             return tasks;

@@ -5,6 +5,7 @@ import { IPostTaskUseCase } from "../../useCases/tasks/contract/IPostTaskUseCase
 import { z } from "zod";
 import { IGetTaskCategoriesUseCase } from "../../useCases/tasksCategories/contracts/IGetTaskCategoriesUseCase";
 import { IPostCategoryTaskUseCase } from "../../useCases/tasksCategories/contracts/IPostCategoryTaskUseCase";
+import { IGetTaskStatusUseCase } from "../../useCases/tasksStatus/contracts/IGetTaskStatusUseCase";
 
 export class TaskController extends BaseController {
 
@@ -12,7 +13,9 @@ export class TaskController extends BaseController {
         private getTasksUseCase: IGetTasksUseCase,
         private postTasksUseCase: IPostTaskUseCase,
         private getTaskCategoriesUseCase: IGetTaskCategoriesUseCase,
-        private postTaskCategoriesUseCase: IPostCategoryTaskUseCase
+        private postTaskCategoriesUseCase: IPostCategoryTaskUseCase,
+        private getTaskStatusUseCase: IGetTaskStatusUseCase,
+        //private postTaskStatusUseCase: IPostCategoryTaskUseCase
     ) { super() }
 
     async getTasks(req: express.Request, res: express.Response) {
@@ -29,6 +32,7 @@ export class TaskController extends BaseController {
 
         }
     }
+
     async postTasks(req: express.Request, res: express.Response) {
 
         const data = z.object({
@@ -36,7 +40,8 @@ export class TaskController extends BaseController {
             description: z.string().optional(),
             startDate: z.string().optional(),
             endDate: z.string().optional(),
-            status: z.string().optional(),
+            status: z.number().optional(),
+            category: z.number().optional()
         }).parse(req.body)
 
         try {
@@ -51,7 +56,6 @@ export class TaskController extends BaseController {
 
         }
     }
-
 
     async getCategoriesTask(req: express.Request, res: express.Response) {
         try {
@@ -73,6 +77,9 @@ export class TaskController extends BaseController {
             category_value: z.string()
         }).parse(req.body)
 
+        console.log("🚀 ~ file: TaskController.ts:76 ~ TaskController ~ postCategoryTask ~ data:", data);
+
+
         try {
             const response = await this.postTaskCategoriesUseCase.execute(data)
 
@@ -83,6 +90,19 @@ export class TaskController extends BaseController {
             super.fail(res, error)
 
 
+        }
+    }
+
+    async getStatusTask(req: express.Request, res: express.Response) {
+        try {
+            const response = await this.getTaskStatusUseCase.execute()
+
+            super.ok(res, response)
+        } catch (error) {
+
+            console.log("🚀 ~ file: TaskController.ts:103 ~ TaskController ~ getStatusTask ~ error:", error);
+
+            super.fail(res, error)
         }
     }
 

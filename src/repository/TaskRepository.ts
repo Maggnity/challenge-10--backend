@@ -1,3 +1,4 @@
+import { tasks_status } from "@prisma/client";
 import { prisma } from "../App";
 import { CategoryTask, Task, TaskDTO } from "../Entities/Tasks";
 import { ITaskRepository } from "./contracts/ITaskRepository";
@@ -8,7 +9,12 @@ export class TaskRepository implements ITaskRepository {
 
     async getTasks(): Promise<{ data: any[]; results: number; }> {
 
-        const response = await prisma.tasks.findMany({})
+        const response = await prisma.tasks.findMany({
+            include: {
+                tasks_category: true,
+                tasks_status: true
+            }
+        })
 
         const responseCount = await prisma.tasks.count({})
 
@@ -23,7 +29,8 @@ export class TaskRepository implements ITaskRepository {
                 description: data.description,
                 startDate: data.startDate,
                 endDate: data.endDate,
-                status: data.status
+                status: data.status,
+                category: data.category
             }
         })
 
@@ -53,5 +60,15 @@ export class TaskRepository implements ITaskRepository {
         })
 
         return response
+    }
+
+
+    async getStatusTasks(): Promise<{ data: tasks_status[]; results: number; }> {
+
+        const response = await prisma.tasks_status.findMany({})
+
+        const results = await prisma.tasks_status.count({})
+
+        return { data: response, results }
     }
 }
