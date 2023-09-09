@@ -1,4 +1,6 @@
-import { CategoryTask } from "../../Entities/Tasks";
+import { Category } from "../../Entities/Category";
+import { Task } from "../../Entities/Tasks";
+import { ICategoryRepository } from "../../repository/contracts/ICategoryRepository";
 import { ITaskRepository } from "../../repository/contracts/ITaskRepository";
 import { IGetTaskCategoriesUseCase } from "./contracts/IGetTaskCategoriesUseCase";
 
@@ -6,15 +8,15 @@ export class GetTaskCategories implements IGetTaskCategoriesUseCase {
 
 
     constructor(
-        private taskCategoriesRepository: ITaskRepository
+        private categoriesRepository: ICategoryRepository
     ) { }
 
 
-    async execute(): Promise<{data: CategoryTask[], results: number}> {
+    async execute(): Promise<{data: Category[], results: number}> {
 
         try {
 
-            const response = await this.taskCategoriesRepository.getCategoryTasks()
+            const response = await this.categoriesRepository.getCategories()
 
             return response
             

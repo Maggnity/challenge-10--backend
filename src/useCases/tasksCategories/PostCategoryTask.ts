@@ -1,17 +1,18 @@
-import { CategoryTask } from "../../Entities/Tasks";
+import { Category } from "../../Entities/Category";
+import { ICategoryRepository } from "../../repository/contracts/ICategoryRepository";
 import { ITaskRepository } from "../../repository/contracts/ITaskRepository";
 import { IPostCategoryTaskUseCase } from "./contracts/IPostCategoryTaskUseCase";
 
 export class PostCategoryTaskUseCase implements IPostCategoryTaskUseCase {
 
 constructor(
-    private taskRepository: ITaskRepository
+    private categoryRepository: ICategoryRepository
 ) {}
 
-async execute(data: CategoryTask): Promise<CategoryTask> {
+async execute(data: Category): Promise<Category> {
 
 try {
-    const response = await this.taskRepository.addCategoryTask(data)
+    const response = await this.categoryRepository.addCategory(data)
     return response
 } catch (error) {
 

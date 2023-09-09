@@ -36,3 +36,10 @@ model tasks_status {
   status_text  String? @db.VarChar(45)
   tasks        tasks[]
 }
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model assigned_categories {
+  id          Int  @id @default(autoincrement())
+  id_task     Int?
+  id_category Int?
+}

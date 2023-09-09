@@ -1,6 +1,6 @@
 import { tasks_category } from "@prisma/client";
-import { CategoryTask, Task } from "../../../Entities/Tasks";
+import { Category } from "../../../Entities/Category";
 
 export interface IGetTaskCategoriesUseCase {
-    execute: () => Promise<{data: CategoryTask[], results: number}>
+    execute: () => Promise<{data: Category[], results: number}>
 }
