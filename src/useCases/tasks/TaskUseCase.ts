@@ -21,8 +21,6 @@ export class Tasks implements ITasks {
 
             const assignedCategory = await this.categoryRepository.getAssignedCategory(task.id)
 
-            console.log("🚀 ~ file: TaskUseCase.ts:23 ~ Tasks ~ getTasks ~ assignedCategory:", assignedCategory);
-
             response.push({task, category: assignedCategory})
         }
         return {data: response, results: response.length}

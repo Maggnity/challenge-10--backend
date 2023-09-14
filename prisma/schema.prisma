@@ -39,7 +39,14 @@ model tasks_status {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model assigned_categories {
-  id          Int  @id @default(autoincrement())
   id_task     Int?
   id_category Int?
+  id          Int  @id @default(autoincrement())
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model account {
+  id    String  @id @unique @db.VarChar(100)
+  name  String? @db.VarChar(100)
+  email String? @unique @db.VarChar(100)
 }

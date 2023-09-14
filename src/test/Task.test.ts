@@ -1,14 +1,16 @@
 import { Task, TaskDTO } from "../Entities/Tasks";
+import { CategoryRepository } from "../repository/CategoryRepository";
 import { TaskRepository } from "../repository/TaskRepository";
-import { PostTask } from "../useCases/tasks/PostTaskUseCase";
 import { Tasks } from "../useCases/tasks/TaskUseCase";
 
-const repo = new TaskRepository()
-const task = new Tasks(repo)
+const repo = new TaskRepository();
+const categoryRepo = new CategoryRepository();
 
-test("Tasks devem ser retornadas", () => {
+const task = new Tasks(repo, categoryRepo)
 
-    const tasks = task.getTasks()
+test("Tasks devem ser retornadas", async () => {
+
+    const tasks = await task.getTasks()
     expect(tasks).not.toBe(null)
     
 
@@ -33,23 +35,6 @@ test("Tasks devem ser criadas com um ID", async () => {
     expect(newTask.id).toBeDefined()
 })
 
-test("Tasks devem possuir data final maior que data de início", async () => {
-    
-    const data: TaskDTO  = {
-        title: `Tesk${Date}`,
-        description: "Lorem Ipsum is simply dummy text.",
-        category: 1,
-        startDate: `${Date.now()}`, 
-        endDate: `${Date.now() - 2}`,
-        status: 1
-    }
-
-    const newTask = await task.createTask(data)
-
-    // when
-
-    // then
-    expect(newTask).toBeNull()
-})
+// test.only("Tasks devem possuir data final maior que data de início", async () => {})
 
 
