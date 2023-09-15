@@ -50,3 +50,10 @@ model account {
   name  String? @db.VarChar(100)
   email String? @unique @db.VarChar(100)
 }
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model assigned_status {
+  id_task   Int?
+  id        Int  @id @default(autoincrement())
+  id_status Int?
+}

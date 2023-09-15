@@ -32,7 +32,7 @@ export class AccountService implements IAccountService {
 
             return r
 
-        } catch (error) {
+        } catch (error:any) {
 
             console.log("🚀 ~ file: AccountService.ts:25 ~ AccountService ~ createAccount ~ error:", error);
             return error.message

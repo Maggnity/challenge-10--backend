@@ -46,6 +46,15 @@ export class TaskRepository implements ITaskRepository {
         return response
     }
 
+    async deleteTask(id: number): Promise<void> {
+        const response = await prisma.tasks.delete({
+            where: {
+                id
+            }
+        })
+        return
+    }
+   
     async getStatusTasks(): Promise<{ data: tasks_status[]; results: number; }> {
 
         const response = await prisma.tasks_status.findMany({})
@@ -53,5 +62,15 @@ export class TaskRepository implements ITaskRepository {
         const results = await prisma.tasks_status.count({})
 
         return { data: response, results }
+    }
+
+    async subscribeStatus(statusId: number, taskId: number): Promise<void> {
+        const response = await prisma.assigned_status.create({
+            data: {
+                id_status: statusId,
+                id_task: taskId
+            }
+        })
+        return
     }
 }

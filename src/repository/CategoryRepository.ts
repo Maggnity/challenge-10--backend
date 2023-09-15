@@ -54,7 +54,7 @@ export class CategoryRepository implements ICategoryRepository {
             data: {
                 id_category: categoryId,
                 id_task: taskId
-            }
+            },
         })
 
         return response

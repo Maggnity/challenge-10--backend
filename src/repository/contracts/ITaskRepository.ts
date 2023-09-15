@@ -8,7 +8,7 @@ export class ITaskRepository {
     
     postTask: (data: tasks) => Promise<tasks>
     putTask: (data: tasks) => Promise<tasks>
-
+    deleteTask: (id: number) => Promise<void>
 
     getStatusTasks: () => Promise<{data: tasks_status[], results: number}>
 

@@ -7,5 +7,7 @@ export interface ITasks {
 
     createTask: (data: Partial<tasks>) => Promise<tasks>
     updateTask: (data: Partial<tasks>) => Promise<tasks>
+    deleteTask: (id: number) => Promise<void>
     assignCategory: (taskId: tasks["id"], categoryId: Category["id"]) => Promise<void>
+    assignStatus: (taskId: tasks["id"], statusId: number) => Promise<void>
 }

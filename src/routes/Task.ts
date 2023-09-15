@@ -18,7 +18,7 @@ export const TaskRouter = () => {
 
     const getTaskCategories = new GetTaskCategories(categoryRepo)
     const postTasksCategories = new PostCategoryTaskUseCase(categoryRepo)
-
+    
     const getStatusTask = new GetTaskStatus(repo)
 
 
@@ -32,6 +32,7 @@ export const TaskRouter = () => {
     routes.get('/tasks', (req, res) => controller.getTasks(req, res))
     routes.post('/task', (req, res) => controller.postTasks(req, res))
     routes.put('/task', (req, res) => controller.putTasks(req, res))
+    routes.delete("/task", (req, res) => controller.deleteTask(req, res))
 
 
     routes.get('/task-categories', (req, res) => controller.getCategories(req, res))

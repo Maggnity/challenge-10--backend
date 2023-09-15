@@ -39,8 +39,8 @@ export class TaskController extends BaseController {
             description: z.string(),
             startDate: z.string(),
             endDate: z.string(),
-            status: z.number(),
-            category: z.number()
+            status: z.number().nullable(),
+            category: z.number().nullable()
         }).parse(req.body)
 
         try {
@@ -72,11 +72,21 @@ export class TaskController extends BaseController {
 
             super.ok(res, response)
         } catch (error) {
-
+            
             console.log("🚀 ~ file: TaskController.ts:17 ~ TaskController ~ getTasks ~ error:", error);
             super.fail(res, error)
-
-
+            
+            
+        }
+    }
+    async deleteTask(req: express.Request, res: express.Response) {
+        
+        const id= z.number().parse(req.body.id)
+        try {
+            const response = await this.tasksUseCase.deleteTask(id)
+            super.ok(res, response)
+        } catch (error) {
+            super.fail(res, error)
         }
     }
 
@@ -92,7 +102,6 @@ export class TaskController extends BaseController {
             super.fail(res, error)
         }
     }
-
     async postCategoryTask(req: express.Request, res: express.Response) {
 
         const data = z.object({
