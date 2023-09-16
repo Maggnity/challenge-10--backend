@@ -8,7 +8,9 @@ export class ICategoryRepository {
     addCategory: (data: Category) => Promise<Category>
 
     getAssignedCategory: (taskId: Task["id"]) => Promise<Category | null>
-    subscribeCategory: (taskId: Task["id"], categoryId: Category["id"]) => Promise<assigned_categories>
+    subscribeCategory: (taskId: number, categoryId: Category["id"]) => Promise<assigned_categories>
+
+    updateSubscribedCategory: (taskId: number, categoryId: Category["id"]) => Promise<void>
 }
 
 

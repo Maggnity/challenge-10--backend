@@ -14,7 +14,7 @@ export const TaskRouter = () => {
     const repo = new TaskRepository()
     const categoryRepo = new CategoryRepository()
 
-    const task = new Tasks(repo, categoryRepo)
+    const task = new Tasks(repo )
 
     const getTaskCategories = new GetTaskCategories(categoryRepo)
     const postTasksCategories = new PostCategoryTaskUseCase(categoryRepo)

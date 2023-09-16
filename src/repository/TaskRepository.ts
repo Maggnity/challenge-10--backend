@@ -24,6 +24,8 @@ export class TaskRepository implements ITaskRepository {
                 description: data.description,
                 startDate: data.startDate,
                 endDate: data.endDate,
+                category: data.category,
+                status: data.status
             }
         })
 
@@ -31,12 +33,17 @@ export class TaskRepository implements ITaskRepository {
     }
     async putTask(data: Partial<tasks>): Promise<tasks> {
 
+    console.log("🚀 ~ file: TaskRepository.ts:36 ~ TaskRepository ~ putTask ~ data:", data);
+
+
         const response = await prisma.tasks.update({
             data: {
                 title: data.title,
                 description: data.description,
                 startDate: data.startDate,
                 endDate: data.endDate,
+                category: data.category,
+                status: data.status
             },
             where: {
                 id: data.id
@@ -47,6 +54,9 @@ export class TaskRepository implements ITaskRepository {
     }
 
     async deleteTask(id: number): Promise<void> {
+
+        console.log("🚀 ~ file: TaskRepository.ts:58 ~ TaskRepository ~ deleteTask ~ id:", id);
+
         const response = await prisma.tasks.delete({
             where: {
                 id
@@ -62,15 +72,5 @@ export class TaskRepository implements ITaskRepository {
         const results = await prisma.tasks_status.count({})
 
         return { data: response, results }
-    }
-
-    async subscribeStatus(statusId: number, taskId: number): Promise<void> {
-        const response = await prisma.assigned_status.create({
-            data: {
-                id_status: statusId,
-                id_task: taskId
-            }
-        })
-        return
     }
 }

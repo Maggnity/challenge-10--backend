@@ -49,7 +49,8 @@ export class CategoryRepository implements ICategoryRepository {
         return null
     }
 
-    async subscribeCategory(taskId: Task["id"], categoryId: Category["id"]) {
+    async subscribeCategory(taskId: number, categoryId: Category["id"]) {
+
         const response = await prisma.assigned_categories.create({
             data: {
                 id_category: categoryId,
@@ -58,5 +59,19 @@ export class CategoryRepository implements ICategoryRepository {
         })
 
         return response
+    }
+
+    async updateSubscribedCategory(taskId: number, categoryId: Category["id"]) {
+
+        const response = await prisma.assigned_categories.update({
+            data: {
+                id_task: taskId,
+                id_category: categoryId
+            },
+            where: {
+                id_task: taskId
+            }
+        })
+        return
     }
 }

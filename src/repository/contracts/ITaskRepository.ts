@@ -4,8 +4,6 @@ import {Task, TaskDTO } from "../../Entities/Tasks";
 export class ITaskRepository {
 
     getTasks: () => Promise<{ data: tasks[], results: number }>
-    
-    
     postTask: (data: tasks) => Promise<tasks>
     putTask: (data: tasks) => Promise<tasks>
     deleteTask: (id: number) => Promise<void>

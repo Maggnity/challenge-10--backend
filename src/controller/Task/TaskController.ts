@@ -36,11 +36,11 @@ export class TaskController extends BaseController {
         const data = z.object({
             id: z.number().optional(),
             title: z.string(),
-            description: z.string(),
-            startDate: z.string(),
-            endDate: z.string(),
-            status: z.number().nullable(),
-            category: z.number().nullable()
+            description: z.string().optional(),
+            startDate: z.string().optional(),
+            endDate: z.string().optional().nullable(),
+            status: z.number().optional(),
+            category: z.number().optional()
         }).parse(req.body)
 
         try {
@@ -51,20 +51,18 @@ export class TaskController extends BaseController {
 
             console.log("🚀 ~ file: TaskController.ts:17 ~ TaskController ~ getTasks ~ error:", error);
             super.fail(res, error)
-
-
         }
     }
     async putTasks(req: express.Request, res: express.Response) {
 
         const data = z.object({
             id: z.number().optional(),
-            title: z.string(),
-            description: z.string(),
-            startDate: z.string(),
-            endDate: z.string(),
-            status: z.number(),
-            category: z.number()
+            title: z.string().optional(),
+            description: z.string().optional(),
+            startDate: z.string().optional(),
+            endDate: z.string().optional().nullable(),
+            status: z.number().optional(),
+            category: z.number().nullable()
         }).parse(req.body)
 
         try {

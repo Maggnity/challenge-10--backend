@@ -39,7 +39,7 @@ model tasks_status {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model assigned_categories {
-  id_task     Int?
+  id_task     Int  @unique
   id_category Int?
   id          Int  @id @default(autoincrement())
 }
