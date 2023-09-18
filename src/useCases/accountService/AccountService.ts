@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { account } from "@prisma/client"
 import { Account } from "../../Entities/Account"
 import { IAccountRepository } from "../../repository/contracts/IAccountRepository"
+import jwt from "jsonwebtoken"
 
 
 export class AccountService implements IAccountService {
@@ -19,7 +20,7 @@ export class AccountService implements IAccountService {
         try {
 
             const id = uuidv4()
-            const data = { ...newAccount, id }
+            const data = { ...newAccount, id, password: "123" }
 
             const accountAlreadExist = await this.getAccountByEmail(newAccount.email)
 
@@ -39,6 +40,33 @@ export class AccountService implements IAccountService {
         }
     }
 
+    async loggIn(email: string, password:string): Promise<any> {
+        try {
+            
+            const account = await this.getAccountByEmail(email)
+            
+            if(!account) throw Error("erro")
+            
+            const passwordIsValid = account.password === password
+            
+            if(!passwordIsValid) throw new Error("Senha inválida!")
+            const secretKey = 'secreto';
+            const token = jwt.sign({ userId: account.id }, secretKey, { expiresIn: '1h' });
+
+
+            return account
+            
+            
+        } catch (error: any) {
+
+            console.log("🚀 ~ file: AccountService.ts:56 ~ AccountService ~ loggIn ~ error:", error.message);
+
+            return error
+        }
+
+    }
+
+
     async getAccountByEmail(email: string): Promise<account | null> {
 
 
@@ -53,4 +81,6 @@ export class AccountService implements IAccountService {
 
         return account
     }
+
+
 }

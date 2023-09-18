@@ -29,49 +29,5 @@ export class CategoryRepository implements ICategoryRepository {
         return response
     }
 
-    async getAssignedCategory(taskId: Task["id"]) {
-        const signature = await prisma.assigned_categories.findFirst({
-            where: {
-                id_task: taskId,
-            }
-        })
 
-        if(signature) {
-
-            
-            const category = await prisma.tasks_category.findUnique({
-                where: {
-                    id: Number(signature?.id_category)
-                }
-            }) 
-            return category as unknown as Category
-        }
-        return null
-    }
-
-    async subscribeCategory(taskId: number, categoryId: Category["id"]) {
-
-        const response = await prisma.assigned_categories.create({
-            data: {
-                id_category: categoryId,
-                id_task: taskId
-            },
-        })
-
-        return response
-    }
-
-    async updateSubscribedCategory(taskId: number, categoryId: Category["id"]) {
-
-        const response = await prisma.assigned_categories.update({
-            data: {
-                id_task: taskId,
-                id_category: categoryId
-            },
-            where: {
-                id_task: taskId
-            }
-        })
-        return
-    }
 }

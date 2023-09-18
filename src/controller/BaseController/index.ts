@@ -11,9 +11,9 @@ abstract class BaseController {
     }
 
     fail(response: express.Response, error: any) {
-        if(error.name === 'ZodError'){
 
-        
+
+        if(error.name === 'ZodError'){
 
             const message = error.issues.map((error: ZodIssue) => `${error.path.toString()}: ${error.message}`).toString()
             return response.status(500).json({ message: message  });
