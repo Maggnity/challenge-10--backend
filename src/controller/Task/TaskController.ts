@@ -5,6 +5,7 @@ import { IGetTaskCategoriesUseCase } from "../../useCases/tasksCategories/contra
 import { IPostCategoryTaskUseCase } from "../../useCases/tasksCategories/contracts/IPostCategoryTaskUseCase";
 import { IGetTaskStatusUseCase } from "../../useCases/tasksStatus/contracts/IGetTaskStatusUseCase";
 import { ITasks } from "../../useCases/tasks/contract/ITasks";
+import { tasks } from "@prisma/client";
 
 export class TaskController extends BaseController {
 
@@ -17,9 +18,16 @@ export class TaskController extends BaseController {
     ) { super() }
 
     async getTasks(req: express.Request, res: express.Response) {
-
         try {
-            const response = await this.tasksUseCase.getTasks()
+
+
+            //@ts-ignore
+            const categories = JSON.parse(req.query.category)
+
+            const response = await this.tasksUseCase.getTasks(categories)
+
+            console.log("🚀 ~ file: TaskController.ts:29 ~ TaskController ~ getTasks ~ response:", response);
+
 
             super.ok(res, response)
         } catch (error) {
@@ -70,16 +78,16 @@ export class TaskController extends BaseController {
 
             super.ok(res, response)
         } catch (error) {
-            
+
             console.log("🚀 ~ file: TaskController.ts:17 ~ TaskController ~ getTasks ~ error:", error);
             super.fail(res, error)
-            
-            
+
+
         }
     }
     async deleteTask(req: express.Request, res: express.Response) {
-        
-        const id= z.number().parse(req.body.id)
+
+        const id = z.number().parse(req.body.id)
         try {
             const response = await this.tasksUseCase.deleteTask(id)
             super.ok(res, response)

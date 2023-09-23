@@ -19,4 +19,21 @@ export class sessionRepository implements ISessionRepository {
         })
         return response
     }
+
+    async getSession(token: string | undefined) {
+
+    console.log("🚀 ~ file: sessionRepository.ts:25 ~ sessionRepository ~ getSession ~ userId:", token);
+
+
+        const response = await prisma.session.findFirst({
+            //@ts-ignore
+            where: {
+                token: token
+            }
+        })
+
+        //todo userId precisa ser unico para pegar esta session
+        return response
+
+    }
 }

@@ -1,6 +1,7 @@
 import { tasks } from "@prisma/client";
 import { TaskRepository } from "../../repository/TaskRepository";
 import { ITasks } from "./contract/ITasks";
+import { Category } from "../../Entities/Category";
 
 export class Tasks implements ITasks {
 
@@ -8,7 +9,25 @@ export class Tasks implements ITasks {
         private taskRepository: TaskRepository,
     ) { }
 
-    async getTasks() {
+    async getTasks(categories: Category[]) {
+
+        if (categories) {
+            const tasks: tasks[] = []
+            let result = 0
+            
+            for (const category of categories) {
+                const filteredResponse = await this.taskRepository.getTasks(category.id)
+
+                for(const task of filteredResponse.data ){
+
+                    tasks.push(task)
+                }
+                result = filteredResponse.results++
+            }
+            console.log("🚀 ~ file: TaskUseCase.ts:17 ~ Tasks ~ getTasks ~ tasks:", tasks);
+            return ({data: tasks, results: tasks.length})
+
+        }
 
         const tasks = await this.taskRepository.getTasks()
         return { data: tasks.data, results: tasks.data.length }

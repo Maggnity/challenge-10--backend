@@ -1,14 +1,27 @@
 import express from "express";
-import jwt from "jsonwebtoken"
+import jwt, { Secret } from "jsonwebtoken"
+import { ISessionRepository } from "../repository/contracts/ISessionRepository";
 
 export class VerifyJWT {
 
-    constructor() { }
+    constructor(
+        private sessionRepository: ISessionRepository
+    ) { }
 
-    verifyToken(req: express.Request, res: express.Response) {
+    async verifyToken(req: express.Request, res: express.Response) {
         
         const token = req.headers.authorization;
-        const secretKey = 'secreto';
+
+        console.log("🚀 ~ file: verifyAccount.ts:12 ~ VerifyJWT ~ verifyToken ~ token:", token);
+
+        if(!token ) throw Error("token")
+
+        const session = await this.sessionRepository.getSession
+        (token);
+
+        if(!session) throw Error("Faça o login para continuar.") 
+        const secretKey = session.token as Secret
+
         if (!token) {
             return res.status(401).json({ message: 'Token não fornecido' });
         }

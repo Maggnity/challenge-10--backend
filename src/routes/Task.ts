@@ -7,6 +7,7 @@ import { GetTaskStatus } from "../useCases/tasksStatus/GetTaskStatusUseCase"
 import { CategoryRepository } from "../repository/CategoryRepository"
 import { Tasks } from "../useCases/tasks/TaskUseCase"
 import { VerifyJWT } from "../middleware/verifyAccount"
+import { sessionRepository } from "../repository/sessionRepository"
 
 export const TaskRouter = () => {
 
@@ -30,9 +31,13 @@ export const TaskRouter = () => {
         getStatusTask
     )   
 
-    const verifyToken = new VerifyJWT()
+    const sessionRepo = new sessionRepository()
+    const verifyToken = new VerifyJWT(sessionRepo)
 
-    routes.get('/tasks', /*(req, res) =>  verifyToken.verifyToken(req, res), */ (req, res) => controller.getTasks(req, res))
+    routes.get('/tasks', 
+        //(req,res) => verifyToken.verifyToken(req, res), 
+        (req, res) => controller.getTasks(req, res)
+    )
     routes.post('/task', (req, res) => controller.postTasks(req, res))
     routes.put('/task', (req, res) => controller.putTasks(req, res))
     routes.delete("/task", (req, res) => controller.deleteTask(req, res))

@@ -7,6 +7,7 @@ abstract class BaseController {
     }
 
     ok(response: express.Response, data: any) {
+        
         return response.status(200).json(data);
     }
 
@@ -19,7 +20,7 @@ abstract class BaseController {
             return response.status(500).json({ message: message  });
         }else{
             console.log(error)
-            return response.status(500).json({ message: error.message });
+            return response.status(500).json({ error: error.message });
         }
        
     }
