@@ -6,6 +6,7 @@ import { IPostCategoryTaskUseCase } from "../../useCases/tasksCategories/contrac
 import { IGetTaskStatusUseCase } from "../../useCases/tasksStatus/contracts/IGetTaskStatusUseCase";
 import { ITasks } from "../../useCases/tasks/contract/ITasks";
 import { tasks } from "@prisma/client";
+import { IUpdateCategoryTaskUseCase } from "../../useCases/tasksCategories/contracts/IUpdateCategoryTaskUseCase";
 
 export class TaskController extends BaseController {
 
@@ -13,6 +14,7 @@ export class TaskController extends BaseController {
         private tasksUseCase: ITasks,
         private getTaskCategoriesUseCase: IGetTaskCategoriesUseCase,
         private postTaskCategoriesUseCase: IPostCategoryTaskUseCase,
+        private updateTaskCategoriesUseCase: IUpdateCategoryTaskUseCase,
         private getTaskStatusUseCase: IGetTaskStatusUseCase,
         //private postTaskStatusUseCase: IPostCategoryTaskUseCase
     ) { super() }
@@ -21,8 +23,8 @@ export class TaskController extends BaseController {
         try {
 
 
-            //@ts-ignore
-            const categories = JSON.parse(req.query.category)
+            const reqCategories = req.query.category?.toString()
+            const categories = reqCategories ? JSON.parse(reqCategories) : ''
 
             const response = await this.tasksUseCase.getTasks(categories)
 
@@ -66,7 +68,7 @@ export class TaskController extends BaseController {
         const data = z.object({
             id: z.number().optional(),
             title: z.string().optional(),
-            description: z.string().optional(),
+            description: z.string().optional().nullable(),
             startDate: z.string().optional(),
             endDate: z.string().optional().nullable(),
             status: z.number().optional(),
@@ -112,7 +114,9 @@ export class TaskController extends BaseController {
 
         const data = z.object({
             category_text: z.string(),
-            category_value: z.string()
+            category_value: z.string(),
+            checked: z.boolean()
+
         }).parse(req.body)
 
         console.log("🚀 ~ file: TaskController.ts:76 ~ TaskController ~ postCategoryTask ~ data:", data);
@@ -128,6 +132,25 @@ export class TaskController extends BaseController {
             super.fail(res, error)
 
 
+        }
+    }
+    async putCategoryTask(req: express.Request, res: express.Response) {
+
+        const data = z.object({
+            id: z.number(),
+            category_text: z.string(),
+            category_value: z.string(),
+            checked: z.boolean()
+        }).parse(req.body)
+
+        try {
+            const response = await this.updateTaskCategoriesUseCase.execute(data)
+            super.ok(res, response)
+
+        } catch (error) {
+
+            console.log("🚀 ~ file: TaskController.ts:148 ~ TaskController ~ putCategoryTask ~ error:", error);
+            super.fail(res, error)
         }
     }
 

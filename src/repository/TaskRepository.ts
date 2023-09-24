@@ -19,7 +19,6 @@ export class TaskRepository implements ITaskRepository {
 
         console.log("🚀 ~ file: TaskRepository.ts:19 ~ TaskRepository ~ getTasks ~ response:", response);
 
-
         const responseCount = await prisma.tasks.count({where: {category}})
 
         return { data: response, results: responseCount }

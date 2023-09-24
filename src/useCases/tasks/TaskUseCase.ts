@@ -30,6 +30,10 @@ export class Tasks implements ITasks {
         }
 
         const tasks = await this.taskRepository.getTasks()
+
+        console.log("🚀 ~ file: TaskUseCase.ts:34 ~ Tasks ~ getTasks ~ tasks:", tasks);
+
+        
         return { data: tasks.data, results: tasks.data.length }
 
     }

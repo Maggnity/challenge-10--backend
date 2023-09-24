@@ -27,6 +27,7 @@ model tasks_category {
   id             Int     @id @default(autoincrement())
   category_value String  @db.VarChar(45)
   category_text  String  @db.VarChar(45)
+  checked        Boolean @default(true)
   tasks          tasks[]
 }
 

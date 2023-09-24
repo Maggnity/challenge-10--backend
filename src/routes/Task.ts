@@ -8,6 +8,7 @@ import { CategoryRepository } from "../repository/CategoryRepository"
 import { Tasks } from "../useCases/tasks/TaskUseCase"
 import { VerifyJWT } from "../middleware/verifyAccount"
 import { sessionRepository } from "../repository/sessionRepository"
+import { UpdateCategoryTaskUseCase } from "../useCases/tasksCategories/UpdateTaskCategoryUseCase"
 
 export const TaskRouter = () => {
 
@@ -20,14 +21,16 @@ export const TaskRouter = () => {
 
     const getTaskCategories = new GetTaskCategories(categoryRepo)
     const postTasksCategories = new PostCategoryTaskUseCase(categoryRepo)
+    const updateTasksCategories = new UpdateCategoryTaskUseCase(categoryRepo)
     
     const getStatusTask = new GetTaskStatus(repo)
 
 
     const controller = new TaskController(
-        task,
+        task,       
         getTaskCategories,
         postTasksCategories,
+        updateTasksCategories,
         getStatusTask
     )   
 
@@ -45,7 +48,7 @@ export const TaskRouter = () => {
 
     routes.get('/task-categories', (req, res) => controller.getCategories(req, res))
     routes.post('/task-category', (req, res) => controller.postCategoryTask(req, res))
-    //routes.put('/task-category', (req, res) => controller.postTaskCategories(req, res))
+    routes.put('/task-category', (req, res) => controller.putCategoryTask(req, res))
     //routes.delete('/task-category', (req, res) => controller.postTaskCategories(req, res))
 
     routes.get('/task-status', (req, res) => controller.getStatusTask(req, res))

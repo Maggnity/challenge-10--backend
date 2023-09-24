@@ -1,3 +1,4 @@
+import { tasks_category } from "@prisma/client";
 import { Category } from "../../Entities/Category";
 import { Task } from "../../Entities/Tasks";
 import { ICategoryRepository } from "../../repository/contracts/ICategoryRepository";
@@ -12,11 +13,14 @@ export class GetTaskCategories implements IGetTaskCategoriesUseCase {
     ) { }
 
 
-    async execute(): Promise<{data: Category[], results: number}> {
+    async execute(): Promise<{data: tasks_category[], results: number}> {
 
         try {
 
             const response = await this.categoriesRepository.getCategories()
+
+            console.log("🚀 ~ file: GetTaskCategories.ts:21 ~ GetTaskCategories ~ execute ~ response:", response);
+
 
             return response
             
