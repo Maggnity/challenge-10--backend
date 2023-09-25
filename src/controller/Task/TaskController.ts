@@ -115,6 +115,7 @@ export class TaskController extends BaseController {
         const data = z.object({
             category_text: z.string(),
             category_value: z.string(),
+            category_color: z.string(),
             checked: z.boolean()
 
         }).parse(req.body)
@@ -140,6 +141,7 @@ export class TaskController extends BaseController {
             id: z.number(),
             category_text: z.string(),
             category_value: z.string(),
+            category_color: z.string().nullable(),
             checked: z.boolean()
         }).parse(req.body)
 
