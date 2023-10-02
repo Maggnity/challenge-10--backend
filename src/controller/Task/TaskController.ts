@@ -115,7 +115,7 @@ export class TaskController extends BaseController {
         const data = z.object({
             category_text: z.string(),
             category_value: z.string(),
-            category_color: z.string(),
+            category_color: z.string().optional(),
             checked: z.boolean()
 
         }).parse(req.body)
