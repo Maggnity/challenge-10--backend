@@ -32,6 +32,9 @@ test("Deve lançar erro se o password fornecido estiver errado", async() => {
     const password = "1234"
     const email = "john.doe@mail.com"
     const user = await accountService.loggIn(email, password)
-    expect(user.password).toStrictEqual(Error( ""))
+
+    console.log("🚀 ~ file: LogIn.test.ts:36 ~ test.only ~ user:", user);
+
+    expect(user).toStrictEqual(Error("Senha inválida!"))
 
 })

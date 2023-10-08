@@ -27,8 +27,8 @@ model tasks_category {
   id             Int     @id @default(autoincrement())
   category_value String  @db.VarChar(45)
   category_text  String  @db.VarChar(45)
-  category_color String? @db.VarChar(45)
   checked        Boolean @default(true)
+  category_color String? @db.VarChar(45)
   tasks          tasks[]
 }
 
@@ -41,10 +41,12 @@ model tasks_status {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model account {
-  id       String  @id @unique @db.VarChar(100)
-  name     String? @db.VarChar(100)
-  email    String? @unique @db.VarChar(100)
-  password String? @db.VarChar(100)
+  id             String  @id @unique @db.VarChar(100)
+  name           String? @db.VarChar(100)
+  email          String? @unique @db.VarChar(100)
+  password       String? @db.VarChar(100)
+  surname        String? @db.VarChar(100)
+  verified_email Boolean @default(false)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

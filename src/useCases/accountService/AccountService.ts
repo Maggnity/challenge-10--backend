@@ -17,27 +17,16 @@ export class AccountService implements IAccountService {
 
     async newAccount(newAccount: Account): Promise<account | undefined> {
 
-        try {
-
             const id = uuidv4()
-            const data = { ...newAccount, id, password: "123" }
+            const data = { ...newAccount, id, verified_email:false }
 
             const accountAlreadExist = await this.getAccountByEmail(newAccount.email)
 
             if(accountAlreadExist) throw Error("O e-mail já existe!")
 
             const r = await this.accountRepository.newAccount(data)
-
-            console.log("🚀 ~ file: AccountService.ts:23 ~ AccountService ~ newAccount ~ r:", r);
-
-
             return r
 
-        } catch (error:any) {
-
-            console.log("🚀 ~ file: AccountService.ts:25 ~ AccountService ~ createAccount ~ error:", error);
-            return error.message
-        }
     }
 
     async loggIn(email: string, password:string): Promise<any> {

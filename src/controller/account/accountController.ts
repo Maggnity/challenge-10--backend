@@ -16,19 +16,25 @@ export class accountController extends BaseController {
             
             const data = z.object({
                 name: z.string(),
-                email: z.string()
+                email: z.string(),
+                password: z.string(),
+                surname: z.string()
             }).parse(req.body)
 
 
-            const response = this.accountServiseUseCase.newAccount(data)
+            const response = await this.accountServiseUseCase.newAccount(data)
 
-            return response
+            console.log("🚀 ~ file: accountController.ts:27 ~ accountController ~ newAccount ~ response:", response);
 
-        } catch (error) {
+
+            super.ok(res, response)
             
+        } catch (error: any) {
+
+            console.log("🚀 ~ file: accountController.ts:34 ~ accountController ~ newAccount ~ error:", error);
+
+            super.fail(res, error)
+            return error
         }
     }
-
-
-
 }

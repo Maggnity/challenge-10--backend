@@ -7,22 +7,26 @@ abstract class BaseController {
     }
 
     ok(response: express.Response, data: any) {
-        
+
         return response.status(200).json(data);
     }
 
     fail(response: express.Response, error: any) {
 
-
-        if(error.name === 'ZodError'){
+        if (error.name === 'ZodError') {
 
             const message = error.issues.map((error: ZodIssue) => `${error.path.toString()}: ${error.message}`).toString()
-            return response.status(500).json({ message: message  });
-        }else{
-            console.log(error)
-            return response.status(500).json({ error: error.message });
+            return response.status(500).json({ message: message });
+        } else {
+            console.log("🚀 ~ file: index.ts:16 ~ BaseController ~ fail ~ error:", error);
+            
+            return response.status(500).json({ 
+                ok: false,
+                error: {
+                    message:error.message
+                } 
+            });
         }
-       
     }
 
     required(value: any, error: any) {
@@ -33,7 +37,7 @@ abstract class BaseController {
         }
     }
 
-    
+
 
 
 }

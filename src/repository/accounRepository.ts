@@ -13,7 +13,9 @@ export class accountRepository implements IAccountRepository {
             data: {
                 id: data.id,
                 name: data.name,
-                email: data.email
+                email: data.email,
+                surname: data.surname,
+                password: data.password
             }
         })
 
