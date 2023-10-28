@@ -7,6 +7,7 @@ import { IGetTaskStatusUseCase } from "../../useCases/tasksStatus/contracts/IGet
 import { ITasks } from "../../useCases/tasks/contract/ITasks";
 import { tasks } from "@prisma/client";
 import { IUpdateCategoryTaskUseCase } from "../../useCases/tasksCategories/contracts/IUpdateCategoryTaskUseCase";
+import { IPostTaskStatusUseCase } from "../../useCases/tasksStatus/contracts/IPostTaskStatusUseCase";
 
 export class TaskController extends BaseController {
 
@@ -16,7 +17,7 @@ export class TaskController extends BaseController {
         private postTaskCategoriesUseCase: IPostCategoryTaskUseCase,
         private updateTaskCategoriesUseCase: IUpdateCategoryTaskUseCase,
         private getTaskStatusUseCase: IGetTaskStatusUseCase,
-        //private postTaskStatusUseCase: IPostCategoryTaskUseCase
+        private postStatusTaskUseCase: IPostTaskStatusUseCase
     ) { super() }
 
     async getTasks(req: express.Request, res: express.Response) {
@@ -166,6 +167,23 @@ export class TaskController extends BaseController {
             console.log("🚀 ~ file: TaskController.ts:103 ~ TaskController ~ getStatusTask ~ error:", error);
 
             super.fail(res, error)
+        }
+    }
+
+    async postStatusTask(req: express.Request, res: express.Response) {
+        try {
+
+            const data = req.body
+
+            const response = await this.postStatusTaskUseCase.execute(data)
+            super.ok(res, response)
+        } catch (error) {
+
+            console.log("🚀 ~ file: TaskController.ts:178 ~ TaskController ~ postStatusTask ~ error:", error);
+
+            super.fail(res, error)
+
+            
         }
     }
 

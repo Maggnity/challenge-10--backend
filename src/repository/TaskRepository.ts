@@ -1,6 +1,5 @@
 import { tasks, tasks_status } from "@prisma/client";
 import { prisma } from "../App";
-import { Task, TaskDTO } from "../Entities/Tasks";
 import { ITaskRepository } from "./contracts/ITaskRepository";
 import { Category } from "../Entities/Category";
 
@@ -80,5 +79,17 @@ export class TaskRepository implements ITaskRepository {
         const results = await prisma.tasks_status.count({})
 
         return { data: response, results }
+    }
+
+    async postStatusTask(data: tasks_status): Promise<void> {
+
+        const response = await prisma.tasks_status.create({
+            data: {
+                status_text: data.status_text,
+                status_value: data.status_text
+            }
+        })
+
+        return
     }
 }

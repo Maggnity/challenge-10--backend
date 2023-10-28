@@ -9,6 +9,7 @@ import { Tasks } from "../useCases/tasks/TaskUseCase"
 import { VerifyJWT } from "../middleware/verifyAccount"
 import { sessionRepository } from "../repository/sessionRepository"
 import { UpdateCategoryTaskUseCase } from "../useCases/tasksCategories/UpdateTaskCategoryUseCase"
+import { PostTaskStatus } from "../useCases/tasksStatus/PostTaskStatusUseCase"
 
 export const TaskRouter = () => {
 
@@ -24,14 +25,15 @@ export const TaskRouter = () => {
     const updateTasksCategories = new UpdateCategoryTaskUseCase(categoryRepo)
     
     const getStatusTask = new GetTaskStatus(repo)
-
+    const postStatusTask = new PostTaskStatus(repo)
 
     const controller = new TaskController(
         task,       
         getTaskCategories,
         postTasksCategories,
         updateTasksCategories,
-        getStatusTask
+        getStatusTask,
+        postStatusTask
     )   
 
     const sessionRepo = new sessionRepository()
@@ -52,6 +54,7 @@ export const TaskRouter = () => {
     //routes.delete('/task-category', (req, res) => controller.postTaskCategories(req, res))
 
     routes.get('/task-status', (req, res) => controller.getStatusTask(req, res))
+    routes.post('/task-status', (req, res) => controller.postStatusTask(req, res))
 
     return routes
 
