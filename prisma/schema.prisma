@@ -16,11 +16,14 @@ model tasks {
   endDate        String?         @db.VarChar(45)
   status         Int?
   category       Int?
+  user_id        String
   tasks_category tasks_category? @relation(fields: [category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category")
   tasks_status   tasks_status?   @relation(fields: [status], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "status")
+  author         account         @relation(fields: [user_id], references: [id])
 
   @@index([category], map: "category_idx")
   @@index([status], map: "status_idx")
+  @@index([user_id], map: "tasks_user_id_fkey")
 }
 
 model tasks_category {
@@ -36,17 +39,23 @@ model tasks_status {
   id           Int     @id @default(autoincrement())
   status_value String? @db.VarChar(45)
   status_text  String? @db.VarChar(45)
+  user_id      String
   tasks        tasks[]
+  author       account @relation(fields: [user_id], references: [id])
+
+  @@index([user_id], map: "tasks_status_user_id_fkey")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model account {
-  id             String  @id @unique @db.VarChar(100)
-  name           String? @db.VarChar(100)
-  email          String? @unique @db.VarChar(100)
-  password       String? @db.VarChar(100)
-  surname        String? @db.VarChar(100)
-  verified_email Boolean @default(false)
+  id             String         @id @unique @db.VarChar(100)
+  name           String?        @db.VarChar(100)
+  email          String?        @unique @db.VarChar(100)
+  password       String?        @db.VarChar(100)
+  surname        String?        @db.VarChar(100)
+  verified_email Boolean        @default(false)
+  tasks          tasks[]
+  tasks_status   tasks_status[]
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

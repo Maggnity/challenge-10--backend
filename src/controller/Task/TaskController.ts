@@ -21,13 +21,18 @@ export class TaskController extends BaseController {
     ) { super() }
 
     async getTasks(req: express.Request, res: express.Response) {
-        try {
 
+
+        try {
+            console.log(req)
+            const userID = req.headers.userid as string
+
+            if(!userID) throw Error("usuário inválido")
 
             const reqCategories = req.query.category?.toString()
             const categories = reqCategories ? JSON.parse(reqCategories) : ''
 
-            const response = await this.tasksUseCase.getTasks(categories)
+            const response = await this.tasksUseCase.getTasks(userID, categories)
 
             console.log("🚀 ~ file: TaskController.ts:29 ~ TaskController ~ getTasks ~ response:", response);
 
@@ -55,7 +60,12 @@ export class TaskController extends BaseController {
         }).parse(req.body)
 
         try {
-            const response = await this.tasksUseCase.createTask(data)
+
+            const userID = req.headers.userid as string
+
+            if(!userID) throw Error("usuário inválido")
+
+            const response = await this.tasksUseCase.createTask(userID, data)
 
             super.ok(res, response)
         } catch (error) {
@@ -77,7 +87,11 @@ export class TaskController extends BaseController {
         }).parse(req.body)
 
         try {
-            const response = await this.tasksUseCase.updateTask(data)
+            const userID = req.headers.userID as string
+
+            if(!userID) throw Error("usuário inválido")
+
+            const response = await this.tasksUseCase.updateTask(userID, data)
 
             super.ok(res, response)
         } catch (error) {
@@ -90,9 +104,13 @@ export class TaskController extends BaseController {
     }
     async deleteTask(req: express.Request, res: express.Response) {
 
+        const userID = req.headers.userID as string
+
+        if(!userID) throw Error("usuário inválido")
+
         const id = z.number().parse(req.body.id)
         try {
-            const response = await this.tasksUseCase.deleteTask(id)
+            const response = await this.tasksUseCase.deleteTask(userID, id)
             super.ok(res, response)
         } catch (error) {
             super.fail(res, error)
@@ -174,8 +192,12 @@ export class TaskController extends BaseController {
         try {
 
             const data = req.body
+            const userID = req.headers.userid
 
-            const response = await this.postStatusTaskUseCase.execute(data)
+            console.log("🚀 ~ file: TaskController.ts:179 ~ TaskController ~ postStatusTask ~ userID:", userID);
+
+
+            const response = await this.postStatusTaskUseCase.execute(userID, data)
             super.ok(res, response)
         } catch (error) {
 

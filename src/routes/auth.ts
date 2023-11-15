@@ -14,6 +14,7 @@ export const AuthRoutes = () => {
     const auth = new Auth(accountRepo, sessionRepo)
    
     const controller = new AuthController(auth)
+    //@ts-ignore
     
     routes.post("/auth", (req, res) => controller.login(req, res))
 

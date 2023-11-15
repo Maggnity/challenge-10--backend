@@ -1,10 +1,8 @@
 import express from 'express'
 import { ZodIssue } from 'zod'
+
 abstract class BaseController {
-
-    constructor() {
-
-    }
+    constructor() { }
 
     ok(response: express.Response, data: any) {
 

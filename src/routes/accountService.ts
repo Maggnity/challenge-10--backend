@@ -15,6 +15,7 @@ export const accountServiceRoutes = () => {
     const controller = new accountController(accountService)
 
 
+    //@ts-ignore
 
     routes.post("/account-service", (req, res) => controller.newAccount(req, res))
 

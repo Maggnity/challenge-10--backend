@@ -9,9 +9,9 @@ export class PostTaskStatus implements IPostTaskStatusUseCase {
     ) { }
 
 
-    async execute (data: tasks_status) {
+    async execute (userID: string, data: tasks_status) {
 
-        const response = await this.taskRepository.postStatusTask(data)
+        const response = await this.taskRepository.postStatusTask(userID, data)
 
         return response
     }

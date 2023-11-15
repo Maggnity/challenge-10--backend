@@ -7,12 +7,12 @@ export class TaskRepository implements ITaskRepository {
 
     constructor() { }
 
-    async getTasks(category?: Category["id"]): Promise<{ data: tasks[]; results: number; }> {
+    async getTasks(userID: string, category?: Category["id"]): Promise<{ data: tasks[]; results: number; }> {
 
 
         const response = await prisma.tasks.findMany({
             where: {
-                category
+                user_id: userID
             }
         })
 
@@ -23,7 +23,9 @@ export class TaskRepository implements ITaskRepository {
         return { data: response, results: responseCount }
     }
 
-    async postTask(data: Partial<tasks>): Promise<tasks> {
+    async postTask(userID:string, data: Partial<tasks>): Promise<tasks> {
+
+        console.log({userID})
 
         const response = await prisma.tasks.create({
             data: {
@@ -32,13 +34,14 @@ export class TaskRepository implements ITaskRepository {
                 startDate: data.startDate,
                 endDate: data.endDate,
                 category: data.category,
-                status: data.status
+                status: data.status,
+                user_id: userID
             }
         })
 
         return response
     }
-    async putTask(data: Partial<tasks>): Promise<tasks> {
+    async putTask(userID: string, data: Partial<tasks>): Promise<tasks> {
 
     console.log("🚀 ~ file: TaskRepository.ts:36 ~ TaskRepository ~ putTask ~ data:", data);
 
@@ -53,20 +56,22 @@ export class TaskRepository implements ITaskRepository {
                 status: data.status
             },
             where: {
-                id: data.id
+                id: data.id,
+                user_id: userID
             }
         })
 
         return response
     }
 
-    async deleteTask(id: number): Promise<void> {
+    async deleteTask(userID: string, id: number): Promise<void> {
 
         console.log("🚀 ~ file: TaskRepository.ts:58 ~ TaskRepository ~ deleteTask ~ id:", id);
 
         const response = await prisma.tasks.delete({
             where: {
-                id
+                id,
+                user_id: userID
             }
         })
         return
@@ -81,12 +86,13 @@ export class TaskRepository implements ITaskRepository {
         return { data: response, results }
     }
 
-    async postStatusTask(data: tasks_status): Promise<void> {
+    async postStatusTask(userID: string, data: tasks_status): Promise<void> {
 
         const response = await prisma.tasks_status.create({
             data: {
                 status_text: data.status_text,
-                status_value: data.status_text
+                status_value: data.status_text,
+                user_id: userID
             }
         })
 

@@ -3,10 +3,10 @@ import { Category } from "../../../Entities/Category";
 import { Task } from "../../../Entities/Tasks";
 
 export interface ITasks {
-    getTasks: (categories: Category[]) => Promise<{data: tasks[], results: number}>
+    getTasks: (userID:string, categories: Category[]) => Promise<{data: tasks[], results: number}>
 
-    createTask: (data: Partial<tasks>) => Promise<tasks>
-    updateTask: (data: Partial<tasks>) => Promise<tasks>
-    deleteTask: (id: number) => Promise<void>
+    createTask: (userID:string, data: Partial<tasks>) => Promise<tasks>
+    updateTask: (userID:string, data: Partial<tasks>) => Promise<tasks>
+    deleteTask: (userID:string, id: number) => Promise<void>
 
 }

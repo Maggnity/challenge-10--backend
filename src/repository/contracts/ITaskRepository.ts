@@ -3,11 +3,11 @@ import {Task, TaskDTO } from "../../Entities/Tasks";
 
 export class ITaskRepository {
 
-    getTasks: () => Promise<{ data: tasks[], results: number }>
-    postTask: (data: tasks) => Promise<tasks>
-    putTask: (data: tasks) => Promise<tasks>
-    deleteTask: (id: number) => Promise<void>
+    getTasks: (userID: string) => Promise<{ data: tasks[], results: number }>
+    postTask: (userID: string, data: tasks) => Promise<tasks>
+    putTask: (userID: string, data: tasks) => Promise<tasks>
+    deleteTask: (userID: string, id: number) => Promise<void>
 
     getStatusTasks: () => Promise<{data: tasks_status[], results: number}>
-    postStatusTask: (data: tasks_status) => Promise<void>
+    postStatusTask: (userID:string, data: tasks_status) => Promise<void>
 }
