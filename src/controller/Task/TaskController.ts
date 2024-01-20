@@ -50,7 +50,7 @@ export class TaskController extends BaseController {
     async postTasks(req: express.Request, res: express.Response) {
 
         const data = z.object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             title: z.string(),
             description: z.string().optional(),
             startDate: z.string().optional(),
@@ -77,7 +77,7 @@ export class TaskController extends BaseController {
     async putTasks(req: express.Request, res: express.Response) {
 
         const data = z.object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             title: z.string().optional(),
             description: z.string().optional().nullable(),
             startDate: z.string().optional(),
@@ -104,11 +104,14 @@ export class TaskController extends BaseController {
     }
     async deleteTask(req: express.Request, res: express.Response) {
 
-        const userID = req.headers.userID as string
+        const userID = req.headers.userid as string
 
         if(!userID) throw Error("usuário inválido")
 
-        const id = z.number().parse(req.body.id)
+        const id = z.string().parse(req.body.task_id)
+
+        console.log("🚀 ~ file: TaskController.ts:113 ~ TaskController ~ deleteTask ~ id:", id);
+
         try {
             const response = await this.tasksUseCase.deleteTask(userID, id)
             super.ok(res, response)

@@ -16,7 +16,7 @@ abstract class BaseController {
             const message = error.issues.map((error: ZodIssue) => `${error.path.toString()}: ${error.message}`).toString()
             return response.status(500).json({ message: message });
         } else {
-            console.log("🚀 ~ file: index.ts:16 ~ BaseController ~ fail ~ error:", error);
+            console.log(error);
             
             return response.status(500).json({ 
                 ok: false,

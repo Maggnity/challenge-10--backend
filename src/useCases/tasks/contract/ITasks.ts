@@ -7,6 +7,6 @@ export interface ITasks {
 
     createTask: (userID:string, data: Partial<tasks>) => Promise<tasks>
     updateTask: (userID:string, data: Partial<tasks>) => Promise<tasks>
-    deleteTask: (userID:string, id: number) => Promise<void>
+    deleteTask: (userID:string, id: string) => Promise<void>
 
 }

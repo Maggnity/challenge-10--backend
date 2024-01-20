@@ -28,7 +28,12 @@ export class AccountService implements IAccountService {
             return r
 
     }
-
+    /** Function loggIn
+     * @function loggIn starts a new user session
+     * 
+     * @param {string} email user email
+     * @param {string} password user passwords
+    **/
     async loggIn(email: string, password:string): Promise<any> {
         try {
             
@@ -55,7 +60,13 @@ export class AccountService implements IAccountService {
 
     }
 
-
+    /** getAccountByEmail
+     * @function getAccountByEmail returns user account
+     * 
+     * @param {string} email user email
+     * 
+     * @returns {account} account user
+    **/
     async getAccountByEmail(email: string): Promise<account | null> {
 
 
@@ -63,6 +74,15 @@ export class AccountService implements IAccountService {
 
         return account
     }
+
+
+    /** getAccountById
+     * @function getAccountByEmail returns user account
+     * 
+     * @param {string} id user id
+     * 
+     * @returns {account} account user
+    **/
     async getAccountById(id: string): Promise<account | null> {
 
 

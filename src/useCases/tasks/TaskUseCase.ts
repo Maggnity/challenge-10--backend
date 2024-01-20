@@ -2,6 +2,9 @@ import { tasks } from "@prisma/client";
 import { TaskRepository } from "../../repository/TaskRepository";
 import { ITasks } from "./contract/ITasks";
 import { Category } from "../../Entities/Category";
+import { v4 as uuidv4 } from 'uuid'
+import { validarDatas } from "../../utils/dateValidations";
+
 
 export class Tasks implements ITasks {
 
@@ -42,8 +45,19 @@ export class Tasks implements ITasks {
     }
     async createTask(userID: string, data: Partial<tasks>) {
 
-        if (data.endDate && data.startDate && data.endDate <= data.startDate) throw new Error("Data inválida")
+        if(data.startDate && data.endDate) {
 
+            const dateIsValid = validarDatas(data.startDate, data.endDate)
+
+        }
+
+        data.id = uuidv4() as string
+
+        if (!data.id) {
+            throw new Error("Falha ao gerar id");
+        }
+
+        //@ts-ignore
         const r = await this.taskRepository.postTask(userID, data)
 
         return r
@@ -55,7 +69,7 @@ export class Tasks implements ITasks {
 
         return r
     }
-    async deleteTask(userID: string, id: number) {
+    async deleteTask(userID: string, id: string) {
 
         if (!id) throw Error("Id inválido")
 

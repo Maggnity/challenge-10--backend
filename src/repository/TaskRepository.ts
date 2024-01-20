@@ -23,12 +23,13 @@ export class TaskRepository implements ITaskRepository {
         return { data: response, results: responseCount }
     }
 
-    async postTask(userID:string, data: Partial<tasks>): Promise<tasks> {
+    async postTask(userID:string, data: tasks): Promise<tasks> {
 
         console.log({userID})
 
         const response = await prisma.tasks.create({
             data: {
+                id: data.id,
                 title: data.title,
                 description: data.description,
                 startDate: data.startDate,
@@ -64,7 +65,7 @@ export class TaskRepository implements ITaskRepository {
         return response
     }
 
-    async deleteTask(userID: string, id: number): Promise<void> {
+    async deleteTask(userID: string, id: string): Promise<void> {
 
         console.log("🚀 ~ file: TaskRepository.ts:58 ~ TaskRepository ~ deleteTask ~ id:", id);
 
