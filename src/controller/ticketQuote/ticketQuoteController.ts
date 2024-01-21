@@ -6,6 +6,7 @@ import { IUpdateTicketQuote } from "../../useCases/ticketQuote/contracts/IUpdate
 import BaseController from "../BaseController";
 import express from 'express'
 import { ticket_quote } from "@prisma/client";
+import { Params } from "../../types/params";
 
 export class TicketQuoteController extends BaseController {
 
@@ -23,11 +24,16 @@ export class TicketQuoteController extends BaseController {
     async getAllTicketQuote(req: express.Request, res: express.Response) {
         try {
             const userID = req.headers.userid as string
-
             if (!userID) throw Error("usuário inválido")
-            const response = await this.getTicketQuote.execute(userID)
+            
+            const params: Params = {
+                limit: Number(req.query.limit),
+                offset: Number(req.query.offset),
+                filters: req.query.filters
+            }
+            
+            const response = await this.getTicketQuote.execute(userID, params)
 
-            console.log({userID})
             console.log(response)
 
             super.ok(res, response)

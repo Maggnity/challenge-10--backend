@@ -1,6 +1,7 @@
 import { account, ticket_quote } from "@prisma/client";
 import { prisma } from "../App";
 import { ITicketQuoteRepository } from "./contracts/ITicketQuoteRepository";
+import { Params } from "../types/params";
 
 export class TicketQuoteRepository implements ITicketQuoteRepository {
 
@@ -63,12 +64,19 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
         return
     }
 
-    async getaAllTickets(userID: account["id"]): Promise<{ data: any[]; results: number; }> {
+    async getaAllTickets(userID: account["id"], params: Params): Promise<{ data: any[]; results: number; }> {
+
+        const limit = params.limit
+        const offset = params.offset
+
         const response = await prisma.ticket_quote.findMany({
             where: {
                 user_id: userID
-            }
+            },
+            take: limit,
+            skip: offset
         })
+
         const results = await prisma.ticket_quote.count({
             where: {
                 user_id: userID
