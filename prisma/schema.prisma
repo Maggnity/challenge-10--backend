@@ -56,7 +56,6 @@ model account {
   verified_email Boolean        @default(false)
   tasks          tasks[]
   tasks_status   tasks_status[]
-  ticket_quote   ticket_quote[]
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -74,10 +73,29 @@ model ticket_quote {
   one_way             Boolean?  @default(false)
   ticket_origin_date  DateTime? @db.Date
   ticket_destiny_date DateTime? @db.Date
-  adults              Int?      @default(1) @db.Int
-  childrens           Int?      @default(0) @db.Int
+  adults              Int?      @default(1)
+  childrens           Int?      @default(0)
   created_at          DateTime? @db.Date
-  updated_at          DateTime? @db.Date
   user_id             String
-  author              account   @relation(fields: [user_id], references: [id])
+  updated_at          DateTime? @db.Date
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model points_program {
+  id           Int    @id @unique
+  program_name String @db.VarChar(100)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model seller_offers {
+  id             String    @id
+  monetary_value Int?
+  miles_value    Int?
+  program        Int?
+  user_id        String
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+
+  @@index([program], map: "seller_offers_program_IDX")
+  @@index([user_id], map: "seller_offers_user_id_fkey")
 }
