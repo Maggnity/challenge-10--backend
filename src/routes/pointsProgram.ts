@@ -15,5 +15,7 @@ export default function pointsProgramRoutes() {
     const getPointsPrograms = new GetPointsProgram(repo)
     const controller = new PointsProgramController(getPointsPrograms)
 
-    routes.get('/points-program', (req: request , res: response) => controller.getPointsPrograms(req, res))
+    routes.get('/points-programs', (req: request , res: response) => controller.getPointsPrograms(req, res))
+
+    return routes
 }

@@ -4,6 +4,7 @@ import { accountServiceRoutes } from "./accountService";
 import { AuthRoutes } from "./auth";
 import ticketsQuoteRouter from "./ticketQuote";
 import sellerOfferRoutes from "./sellerOffer";
+import pointsProgramRoutes from "./pointsProgram";
 
 export const apiRouter = () => {
 
@@ -14,6 +15,7 @@ export const apiRouter = () => {
     routes.use(TaskRouter())
     routes.use(ticketsQuoteRouter())
     routes.use(sellerOfferRoutes())
+    routes.use(pointsProgramRoutes())
 
     return routes
 }

@@ -51,7 +51,11 @@ export class SellerOfferCotroller extends BaseController {
                 monetary_value: z.number(),
                 miles_value: z.number(),
                 program: z.number(),
-            }).parse(req.body)
+            }).parse({
+                monetary_value: Number(req.body.monetary_value),
+                miles_value: Number(req.body.miles_value),
+                program: Number(req.body.program)
+            })
 
             const response = await this.postSellerOffer.execute(userID, data)
 

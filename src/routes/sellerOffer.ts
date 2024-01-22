@@ -20,6 +20,7 @@ export default function sellerOfferRoutes() {
     const controller = new SellerOfferCotroller(getSellerOffers, postSellerOffer)
 
     routes.get("/seller-offers", (req, res) => controller.getAllSellerOffers(req, res))
+    routes.post("/seller-offers", (req, res) => controller.createSellerOffer(req, res))
 
     return routes
 }

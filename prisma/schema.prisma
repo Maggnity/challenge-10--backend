@@ -82,8 +82,9 @@ model ticket_quote {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model points_program {
-  id           Int    @id @unique
-  program_name String @db.VarChar(100)
+  id           Int     @id @unique
+  program_name String  @db.VarChar(100)
+  url_logo     String? @db.VarChar(100)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
