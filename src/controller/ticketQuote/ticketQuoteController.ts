@@ -29,7 +29,7 @@ export class TicketQuoteController extends BaseController {
             const params: Params = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
-                filters: req.query.filters
+                filters: JSON.parse(req.query.filters as string)
             }
             
             const response = await this.getTicketQuote.execute(userID, params)

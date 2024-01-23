@@ -1,6 +1,13 @@
+
+type OrderBy = {
+    created_at: "asc" | "desc"
+}
+
 export type Params = {
 
-    filters: any,
+    filters: {
+        created_at: "asc" | "desc",
+    },
     limit: number,
     offset: number
 

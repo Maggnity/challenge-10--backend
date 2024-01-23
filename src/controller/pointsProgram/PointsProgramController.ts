@@ -22,7 +22,7 @@ export default class PointsProgramController extends BaseController {
             const params: Params = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
-                filters: req.query.filters
+                filters:  JSON.parse(req.query.filters as unknown as string)
             }
 
             const response = await this.getPointsProgramsUseCase.execute(userID, params)

@@ -10,13 +10,19 @@ export class SellerOfferRepository implements ISellerOffersRepository {
 
     async getAllSellerOffers(userID: string, params: Params): Promise<{ data: seller_offers[]; results: number; }> {
 
+        const filters = params.filters
+
+        console.log({filters})
 
         const response = await prisma.seller_offers.findMany({
             where: {
                 user_id: userID
             },
             take: params.limit,
-            skip: params.offset
+            skip: params.offset,
+            orderBy: {
+                created_at: filters.created_at
+            }
         })
 
         const results = await prisma.seller_offers.count({
@@ -46,6 +52,7 @@ export class SellerOfferRepository implements ISellerOffersRepository {
                 miles_value: data.miles_value,
                 monetary_value: data.monetary_value,
                 program: data.program,
+                created_at: data.created_at,
                 id: data.id
             }
         })

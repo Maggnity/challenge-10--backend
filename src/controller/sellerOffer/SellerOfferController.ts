@@ -5,6 +5,7 @@ import BaseController from "../BaseController";
 import express from "express";
 import { z } from "zod";
 import { IPostSellerOffer } from "../../useCases/sellerOffers/contracts/IPostSellerOffers";
+import { request } from "../../types/request";
 
 export class SellerOfferCotroller extends BaseController {
 
@@ -25,8 +26,9 @@ export class SellerOfferCotroller extends BaseController {
             const params: Params = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
-                filters: req.query.filters
+                filters: JSON.parse(req.query.filters as string)
             }
+
 
             const response = await this.getSellerOffers.execute(userID, params)
 
