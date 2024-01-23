@@ -18,19 +18,22 @@ export default class PointsProgramController extends BaseController {
         try {
 
             const userID = req.headers.userid as account["id"]
+
+            const filtersAsString = req.query.filters
+            const filtersAsJson = typeof filtersAsString === "string" ? JSON.parse(filtersAsString) : req.query.filters;
             
-            const filters = req.query.filters
+            const filters = req.query.filters;
 
             const params: Params = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
-                filters:   JSON.parse(filters)
+                filters: filtersAsJson
             }
 
             const response = await this.getPointsProgramsUseCase.execute(userID, params)
 
             super.ok(res, response)
-            
+
         } catch (error) {
             super.fail(res, error)
         }

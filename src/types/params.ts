@@ -5,7 +5,7 @@ type OrderBy = {
 
 export type Params = {
 
-    filters: string,
+    filters?: { created_at: "asc" | "desc" } | string,
     limit: number,
     offset: number
 

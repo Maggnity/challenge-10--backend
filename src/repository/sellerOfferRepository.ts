@@ -16,13 +16,15 @@ export class SellerOfferRepository implements ISellerOffersRepository {
 
         const response = await prisma.seller_offers.findMany({
             where: {
-                user_id: userID
+                user_id: userID,
             },
             take: params.limit,
             skip: params.offset,
             orderBy: {
-                created_at: filters.created_at
-            }
+                //@ts-ignore
+                created_at: filters?.created_at
+            },
+            
         })
 
         const results = await prisma.seller_offers.count({

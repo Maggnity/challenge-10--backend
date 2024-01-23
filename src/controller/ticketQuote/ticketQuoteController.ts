@@ -25,11 +25,14 @@ export class TicketQuoteController extends BaseController {
         try {
             const userID = req.headers.userid as string
             if (!userID) throw Error("usuário inválido")
-            
+        
+            const filtersAsString = req.query.filters
+            const filtersAsJson = typeof filtersAsString === "string" ? JSON.parse(filtersAsString) : req.query.filters;
+
             const params: Params = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
-                filters: JSON.parse(req.query.filters as string)
+                filters: filtersAsJson
             }
             
             const response = await this.getTicketQuote.execute(userID, params)
