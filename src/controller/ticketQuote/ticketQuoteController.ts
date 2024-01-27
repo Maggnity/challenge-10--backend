@@ -55,14 +55,14 @@ export class TicketQuoteController extends BaseController {
             const data = z.object({
                 ticket_origin: z.string(),
                 ticket_origin_date: z.date(),
-                ticket_destiny: z.optional(z.string()),
-                ticket_destiny_date: z.optional(z.date()),
+                ticket_destination: z.optional(z.string()),
+                ticket_destination_date: z.optional(z.date()),
                 adults: z.number(),
                 childrens: z.number(),
             }).parse({
                 ...req.body,
-                ticket_origin_date: req.body.ticket_origin_date ? new Date(req.body.ticket_origin_date) : null,
-                ticket_destiny_date: req.body.ticket_destiny_date ? new Date(req.body.ticket_destiny_date) : undefined,
+                ticket_origin_date: new Date(req.body.ticket_origin_date),
+                ticket_destination_date: new Date(req.body.ticket_destination_date),
                 adults: Number(req.body.adults),
                 childrens: Number(req.body.childrens),
             })
@@ -84,8 +84,8 @@ export class TicketQuoteController extends BaseController {
             const data = z.object({
                 ticket_origin: z.string(),
                 ticket_origin_date: z.date(),
-                ticket_destiny: z.string(),
-                ticket_destiny_date: z.date(),
+                ticket_destination: z.string(),
+                ticket_destination_date: z.date(),
                 adults: z.number(),
                 cildrens: z.number(),
             }).parse(req.body)

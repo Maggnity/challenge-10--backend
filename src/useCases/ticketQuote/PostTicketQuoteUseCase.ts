@@ -2,6 +2,8 @@ import { ITicketQuoteRepository } from "../../repository/contracts/ITicketQuoteR
 import { IPostTicketQuote } from "./contracts/IPostTicketQuote";
 import { account, ticket_quote } from "@prisma/client";
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios';
+
 
 export class PostTicketQuoteUseCase implements IPostTicketQuote {
 
@@ -18,7 +20,9 @@ export class PostTicketQuoteUseCase implements IPostTicketQuote {
         //@ts-ignore
         const response = await this.ticketQuoteRepository.postTicket(userID, data)
 
+
+        await axios.post("http://localhost:5000/api/crawler-latam-flights", data)
+
         return response
     }
-
 }

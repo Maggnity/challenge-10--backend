@@ -67,17 +67,17 @@ model session {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ticket_quote {
-  id                  String    @id
-  ticket_origin       String?   @db.VarChar(100)
-  ticket_destiny      String?   @db.VarChar(100)
-  one_way             Boolean?  @default(false)
-  ticket_origin_date  DateTime? @db.Date
-  ticket_destiny_date DateTime? @db.Date
-  adults              Int?      @default(1)
-  childrens           Int?      @default(0)
-  created_at          DateTime? @db.Date
-  user_id             String
-  updated_at          DateTime? @db.Date
+  id                      String    @id
+  ticket_origin           String?   @db.VarChar(100)
+  ticket_destination      String?   @db.VarChar(100)
+  one_way                 Boolean?  @default(false)
+  ticket_origin_date      DateTime? @db.Date
+  ticket_destination_date DateTime? @db.Date
+  adults                  Int?      @default(1)
+  childrens               Int?      @default(0)
+  created_at              DateTime? @db.Date
+  user_id                 String
+  updated_at              DateTime? @db.Date
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -99,4 +99,43 @@ model seller_offers {
 
   @@index([program], map: "seller_offers_program_IDX")
   @@index([user_id], map: "seller_offers_user_id_fkey")
+}
+
+model airports {
+  icao      String?  @db.VarChar(10)
+  iata      String?  @db.VarChar(10)
+  name      String?  @db.VarChar(100)
+  city      String?  @db.VarChar(50)
+  state     String?  @db.VarChar(40)
+  country   String?  @db.VarChar(2)
+  elevation Int?
+  lat       Decimal? @db.Decimal(10, 0)
+  lon       Decimal? @db.Decimal(10, 0)
+  tz        String?  @db.VarChar(40)
+  id        Int      @unique
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model latam_brands {
+  brand String? @db.VarChar(100)
+
+  @@ignore
+}
+
+model latam_flights {
+  id                       String   @id @db.VarChar(100)
+  origin                   Json?
+  destination              Json?
+  origin_departure         String?  @db.VarChar(100)
+  origin_departure_time    String?  @db.VarChar(100)
+  origin_iata_code         String?  @db.VarChar(100)
+  origin_airport           String?  @db.VarChar(100)
+  origin_city              String?  @db.VarChar(100)
+  destinatition_arrival    String?  @db.VarChar(100)
+  destination_arrival_time String?  @db.VarChar(100)
+  destination_iata_code    String?  @db.VarChar(100)
+  destination_airport      String?  @db.VarChar(100)
+  destination_city         String?  @db.VarChar(100)
+  cabin                    String?  @db.VarChar(100)
+  price                    Decimal? @db.Decimal(10, 0)
 }

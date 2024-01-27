@@ -2,9 +2,6 @@ import App from './App';
 
 process.env.TZ = 'America/Sao_Paulo'
 
-
-
-
 const config = {
     ssl: false
 }

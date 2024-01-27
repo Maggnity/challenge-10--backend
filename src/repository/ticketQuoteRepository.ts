@@ -17,9 +17,9 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
                 adults: data.adults,
                 childrens: data.childrens,
                 one_way: data.one_way,
-                ticket_destiny: data.ticket_destiny,
+                ticket_destination: data.ticket_destination,
                 ticket_origin: data.ticket_origin,
-                ticket_destiny_date: data.ticket_destiny_date,
+                ticket_destination_date: data.ticket_destination_date,
                 ticket_origin_date: data.ticket_origin_date,
                 created_at: new Date(),
             }
@@ -41,14 +41,15 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
                 adults: data.adults,
                 childrens: data.childrens,
                 one_way: data.one_way,
-                ticket_destiny: data.ticket_destiny,
+                ticket_destination: data.ticket_destination,
                 ticket_origin: data.ticket_origin,
-                ticket_destiny_date: data.ticket_destiny_date,
+                ticket_destination_date: data.ticket_destination_date,
                 ticket_origin_date: data.ticket_origin_date,
                 updated_at: new Date()
             }
         })
 
+        
         return updatedTicket
 
     }
