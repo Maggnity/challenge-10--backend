@@ -1,4 +1,4 @@
-import { account } from "@prisma/client";
+import { account, seller_offers } from "@prisma/client";
 import { Params } from "../../types/params";
 import { IGetSellerOffers } from "../../useCases/sellerOffers/contracts/IGetSellerOffers";
 import BaseController from "../BaseController";
@@ -23,7 +23,7 @@ export class SellerOfferCotroller extends BaseController {
             const userID = req.headers.userid as account["id"]
             if (!userID) throw Error("usuário inválido")
 
-            const params: Params = {
+            const params: Params<Partial<seller_offers>> = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
                 filters: JSON.parse(req.query.filters as string)

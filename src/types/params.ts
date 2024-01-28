@@ -3,9 +3,12 @@ type OrderBy = {
     created_at: "asc" | "desc"
 }
 
-export type Params = {
+export type Params<T> = {
 
-    filters?: { created_at: "asc" | "desc" } | string,
+    filters?: { 
+        created_at: "asc" | "desc" 
+        
+    } & T | string & T,
     limit: number,
     offset: number
 
