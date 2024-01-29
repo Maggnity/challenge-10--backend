@@ -15,7 +15,7 @@ export class FlightsController extends BaseController {
 
         try {
 
-            const params: Params<Partial<latam_flights>> = {
+            const params: Params<latam_flights> = {
                 limit: 20,
                 offset: 0,
                 filters: JSON.parse(req.query.filters as string)

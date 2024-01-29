@@ -29,7 +29,7 @@ export class TicketQuoteController extends BaseController {
             const filtersAsString = req.query.filters
             const filtersAsJson = typeof filtersAsString === "string" ? JSON.parse(filtersAsString) : req.query.filters;
 
-            const params: Params = {
+            const params: Params<ticket_quote> = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
                 filters: filtersAsJson

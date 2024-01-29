@@ -9,7 +9,7 @@ export class GetPointsProgram implements IGetPointsProgram {
         private pointsProgramRepository: IPointsProgramRepository
     ) { }
 
-    async execute(userID: string, params?: Params | undefined): Promise<points_program[]> {
+    async execute(userID: string, params?: Params<points_program>): Promise<points_program[]> {
 
         const response = await this.pointsProgramRepository.getPointsPrograms(userID, params)
 

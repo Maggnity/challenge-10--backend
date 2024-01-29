@@ -1,4 +1,4 @@
-import { account } from "@prisma/client";
+import { account, points_program } from "@prisma/client";
 import { Params } from "../../types/params";
 import { request } from "../../types/request";
 import { response } from "../../types/response";
@@ -24,7 +24,7 @@ export default class PointsProgramController extends BaseController {
             
             const filters = req.query.filters;
 
-            const params: Params = {
+            const params: Params<points_program> = {
                 limit: Number(req.query.limit),
                 offset: Number(req.query.offset),
                 filters: filtersAsJson

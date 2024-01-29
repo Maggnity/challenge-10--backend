@@ -10,7 +10,7 @@ export class GetTicketQuoteUseCase implements IGetTicketQuote {
     ) {}
 
 
-    async execute(userID: account["id"], params: Params): Promise<{ data: ticket_quote[], results: number }> {
+    async execute(userID: account["id"], params: Params<ticket_quote>): Promise<{ data: ticket_quote[], results: number }> {
 
         const response = await this.ticketQuoteRepository.getaAllTickets(userID, params)
 

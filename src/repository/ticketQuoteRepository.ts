@@ -65,7 +65,7 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
         return
     }
 
-    async getaAllTickets(userID: account["id"], params: Params): Promise<{ data: any[]; results: number; }> {
+    async getaAllTickets(userID: account["id"], params: Params<ticket_quote>): Promise<{ data: any[]; results: number; }> {
 
         const limit = params.limit
         const offset = params.offset

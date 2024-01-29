@@ -10,7 +10,7 @@ export class GetFlightsUseCase implements IGetFlights {
     private latamRepository: ILatamRepository
   ) { }
 
-  async execute(userID: string, params?: getParams): Promise<{data: latam_flights[], results: number}> {
+  async execute(userID: string, params: Params<latam_flights>): Promise<{data: latam_flights[], results: number}> {
 
     const {data, results} = await this.latamRepository.getFlights(params)
 

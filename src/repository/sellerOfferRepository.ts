@@ -8,7 +8,7 @@ export class SellerOfferRepository implements ISellerOffersRepository {
     constructor() { }
 
 
-    async getAllSellerOffers(userID: string, params: Params): Promise<{ data: seller_offers[]; results: number; }> {
+    async getAllSellerOffers(userID: string, params: Params<seller_offers>): Promise<{ data: seller_offers[]; results: number; }> {
 
         const filters = params.filters
 
@@ -20,8 +20,8 @@ export class SellerOfferRepository implements ISellerOffersRepository {
             },
             take: params.limit,
             skip: params.offset,
+            //@ts-ignore
             orderBy: {
-                //@ts-ignore
                 created_at: filters?.created_at
             },
             
