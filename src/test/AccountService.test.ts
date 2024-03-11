@@ -1,83 +1,54 @@
+import { Account } from "../Entities/Account"
 import { accountRepository } from "../repository/accounRepository"
 import { AccountService } from "../useCases/accountService/AccountService"
 
 const accountRepo = new accountRepository()
 const accountService = new AccountService(accountRepo)
 
+const dn = Date.now()
+
+const newAccount: Account = {
+    email: `${dn}@mail.com`,
+    name: "John Doe",
+    password: "123",
+    surname: "Doe"
+} 
+
+let id;
+
 test("Deve existir um account service", () => {
     expect(accountService).toBeDefined()
 })
+
 test("Deve criar um account com id", async () => {
 
-    const data = {
-        name: "John Doe",
-        email: `john.doe${new Date()}@mail.com`,
-        surname: "Doe",
-        password: `${Date.now()}`
-    }
+    const output = await accountService.newAccount(newAccount)
 
-    const output = await accountService.newAccount(data)
-
-    console.log("🚀 ~ file: AccountService.test.ts:20 ~ test ~ output:", output);
-
+    id = output?.id
 
     expect(output?.id).toBeDefined()
     expect(output?.id).not.toBe(null)
 })
 test("O e-mail deve ser único", async () => {
-    const data = {
-        name: "John Doe",
-        email: `john.doe${Date.now()}@mail.com`,
-        surname: "Doe",
-        password: `${Date.now()}`
-    }
 
-    const firstCreate = await accountService.newAccount(data)
+    const output = await accountService.newAccount(newAccount)
 
-    expect(firstCreate?.email).toBe(data.email)
-    expect(firstCreate?.name).toBe(data.name)
-
-    const output = await accountService.newAccount(data)
+    console.log({output})
 
     expect(output).toBe("O e-mail já existe!")
-
-
 })
+
 test("Deve ser possível buscar pelo e-mail", async () => {
-    const data = {
-        name: "John",
-        email: `john.doe${Date.now()}@mail.com`,
-        surname: "Doe",
-        password: `${Date.now()}`
-    }
 
-    const insertFirstMail = await accountService.newAccount(data)
+    const output = await accountService.getAccountByEmail(newAccount.email)
 
-    const output = await accountService.getAccountByEmail(data.email)
-
-    expect(output?.name).toBe(data.name)
-    expect(output?.email).toBe(data.email)
+    expect(output?.name).toBe(newAccount.name)
+    expect(output?.email).toBe(newAccount.email)
 })
 test("Deve ser possível buscar pelo id", async () => {
 
-    const data = {
-        name: "John Doe",
-        email: `john.doe${Date.now()}@mail.com`,
-        surname: "Doe",
-        password: `${Date.now()}`
-    }
+    const output = await accountService.getAccountById(id)
 
-    const insertFirstMail = await accountService.newAccount(data)
-    if (!insertFirstMail) throw Error("Não foi criada a conta")
-
-
-    const output = await accountService.getAccountById(insertFirstMail?.id)
-
-    expect(output?.id).toBe(insertFirstMail.id)
-    expect(output?.email).toBe(insertFirstMail.email)
+    expect(output?.id).toBe(id)
+    expect(output?.email).toBe(newAccount.email)
 })
-
-
-// Deve ser possível buscar pelo e-mail
-//
-// Deve ser possível buscar pelo id

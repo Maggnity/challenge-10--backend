@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { IDeleteTicketQuote } from "../../useCases/ticketQuote/contracts/IDeleteTicketQuote";
-import { IGetTicketQuote } from "../../useCases/ticketQuote/contracts/IGetTicketQuote";
+import { IGetTicketsQuote } from "../../useCases/ticketQuote/contracts/IGetTicketsQuote";
 import { IPostTicketQuote } from "../../useCases/ticketQuote/contracts/IPostTicketQuote";
 import { IUpdateTicketQuote } from "../../useCases/ticketQuote/contracts/IUpdateTcketQuote";
 import BaseController from "../BaseController";
@@ -13,7 +13,7 @@ export class TicketQuoteController extends BaseController {
 
     constructor(
 
-        private getTicketQuote: IGetTicketQuote,
+        private getTicketQuote: IGetTicketsQuote,
         private postTicketQuote: IPostTicketQuote,
         private updateTicketQuote: IUpdateTicketQuote,
         private deleteTicketQuote: IDeleteTicketQuote,
@@ -46,6 +46,9 @@ export class TicketQuoteController extends BaseController {
 
         }
     }
+
+    // @todo getTicketQuote
+
     async createTicketQuote(req: express.Request, res: express.Response) {
 
         try {

@@ -21,10 +21,10 @@ export class LatamRespository implements ILatamRepository {
                 origin_iata_code: params.filters?.origin_iata_code,
                 destination_iata_code: params.filters?.destination_iata_code,
                 destinatition_arrival: {
-                    contains: arrival
+                    startsWith:arrival
                 },
                 origin_departure: {
-                    contains: deperture,
+                    startsWith: deperture,
                     
                 }
             },

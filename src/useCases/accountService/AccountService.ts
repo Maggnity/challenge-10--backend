@@ -20,6 +20,7 @@ export class AccountService implements IAccountService {
             const id = uuidv4()
             const data = { ...newAccount, id, verified_email:false }
 
+            console.log(newAccount.email)
             const accountAlreadExist = await this.getAccountByEmail(newAccount.email)
 
             if(accountAlreadExist) throw Error("O e-mail já existe!")

@@ -55,6 +55,7 @@ export class SellerOfferRepository implements ISellerOffersRepository {
                 monetary_value: data.monetary_value,
                 program: data.program,
                 created_at: data.created_at,
+                status: data.status,
                 id: data.id
             }
         })

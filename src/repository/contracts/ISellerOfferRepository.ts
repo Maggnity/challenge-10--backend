@@ -4,7 +4,7 @@ import { Params } from "../../types/params";
 export interface ISellerOffersRepository {
 
 
-    getAllSellerOffers: (userID: account["id"], params: Params) => Promise<{data: seller_offers[] , results: number}>
+    getAllSellerOffers: (userID: account["id"], params: Params<seller_offers>) => Promise<{data: seller_offers[] , results: number}>
 
     createSellerOffer: (userID: account["id"], params: Partial<seller_offers>) => Promise<seller_offers>
 

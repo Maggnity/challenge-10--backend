@@ -21,18 +21,17 @@ export class accountController extends BaseController {
                 surname: z.string()
             }).parse(req.body)
 
+            console.log({body: req.body})
+
 
             const response = await this.accountServiseUseCase.newAccount(data)
 
-            console.log("🚀 ~ file: accountController.ts:27 ~ accountController ~ newAccount ~ response:", response);
-
+            console.log(response)
 
             super.ok(res, response)
             
         } catch (error: any) {
-
-            console.log("🚀 ~ file: accountController.ts:34 ~ accountController ~ newAccount ~ error:", error);
-
+            console.log(error.message)
             super.fail(res, error)
             return error
         }

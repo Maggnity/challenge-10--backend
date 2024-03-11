@@ -16,12 +16,12 @@ export class PostTicketQuoteUseCase implements IPostTicketQuote {
         data.id = uuidv4() as string
 
         if(!data.id) throw Error("invalid data")
-
+        data.status = "created"
         //@ts-ignore
         const response = await this.ticketQuoteRepository.postTicket(userID, data)
 
 
-        await axios.post("http://localhost:5000/api/crawler-latam-flights", data)
+        //await axios.post("http://localhost:5000/api/crawler-latam-flights", data)
 
         return response
     }

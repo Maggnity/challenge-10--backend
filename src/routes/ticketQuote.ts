@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { GetTicketQuoteUseCase } from "../useCases/ticketQuote/GetTicketQuoteUseCase";
+import { GetTicketQuotesUseCase } from "../useCases/ticketQuote/GetTicketQuotesUseCase";
 import { PostTicketQuoteUseCase } from "../useCases/ticketQuote/PostTicketQuoteUseCase";
 import { UpdateTicketQuoteUseCase } from "../useCases/ticketQuote/UpdateTicketQuoteUseCase";
 import { DeleteteTicketQuoteUseCase } from "../useCases/ticketQuote/DeleteTicketQuoteUseCase";
@@ -13,7 +13,7 @@ export default function ticketsQuoteRouter() {
 
     const ticketsRepository = new TicketQuoteRepository()
 
-    const findAllTickets = new GetTicketQuoteUseCase(ticketsRepository);
+    const findAllTickets = new GetTicketQuotesUseCase(ticketsRepository);
     const createTicket = new PostTicketQuoteUseCase(ticketsRepository)
     const updateTicket = new UpdateTicketQuoteUseCase(ticketsRepository)
     const deleteTicket = new DeleteteTicketQuoteUseCase(ticketsRepository)

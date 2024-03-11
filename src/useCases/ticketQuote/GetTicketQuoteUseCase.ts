@@ -1,19 +1,26 @@
 import { IGetTicketQuote } from "./contracts/IGetTicketQuote";
-import { account, ticket_quote } from "@prisma/client";
+import { ticket_quote } from "@prisma/client";
 import { ITicketQuoteRepository } from "../../repository/contracts/ITicketQuoteRepository";
-import { Params } from "../../types/params";
 
 export class GetTicketQuoteUseCase implements IGetTicketQuote {
 
     constructor(
         private ticketQuoteRepository: ITicketQuoteRepository
-    ) {}
+    ) { }
 
 
-    async execute(userID: account["id"], params: Params<ticket_quote>): Promise<{ data: ticket_quote[], results: number }> {
+    async execute(id: ticket_quote["id"]): Promise<ticket_quote | null> {
 
-        const response = await this.ticketQuoteRepository.getaAllTickets(userID, params)
+        try {
 
-        return response
+            const response = await this.ticketQuoteRepository.getTicketQuoteById(id)
+
+            return response
+
+
+        } catch (error: any) {
+            console.log(error.message)
+            return error.message
+        }
     }
 }

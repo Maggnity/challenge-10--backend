@@ -6,6 +6,7 @@ import ticketsQuoteRouter from "./ticketQuote";
 import sellerOfferRoutes from "./sellerOffer";
 import pointsProgramRoutes from "./pointsProgram";
 import { flightsRouter } from "./getFlights";
+import { passengerRouter } from "./passenger";
 
 export const apiRouter = () => {
 
@@ -18,6 +19,7 @@ export const apiRouter = () => {
     routes.use(sellerOfferRoutes())
     routes.use(pointsProgramRoutes())
     routes.use(flightsRouter())
+    routes.use(passengerRouter())
 
     return routes
 }

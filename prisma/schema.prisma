@@ -78,6 +78,7 @@ model ticket_quote {
   created_at              DateTime? @db.Date
   user_id                 String
   updated_at              DateTime? @db.Date
+  status                  String?   @db.VarChar(10)
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -96,6 +97,7 @@ model seller_offers {
   user_id        String
   created_at     DateTime? @db.Timestamp(0)
   updated_at     DateTime? @db.Timestamp(0)
+  status         String?   @db.VarChar(100)
 
   @@index([program], map: "seller_offers_program_IDX")
   @@index([user_id], map: "seller_offers_user_id_fkey")
@@ -138,4 +140,18 @@ model latam_flights {
   destination_city         String?  @db.VarChar(100)
   cabin                    String?  @db.VarChar(100)
   price                    Decimal? @db.Decimal(10, 0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model passengers {
+  passenger_id       String    @id @unique @db.VarChar(100)
+  user_id            String    @db.VarChar(100)
+  passenger_name     String    @db.VarChar(100)
+  passenger_cpf      String    @db.VarChar(100)
+  passenger_mail     String    @db.VarChar(100)
+  pasenger_phone     String    @db.VarChar(100)
+  passenger_birthday DateTime  @db.Date
+  created_at         DateTime? @db.Date
+  updated_at         DateTime? @db.Date
+  active             Boolean?
 }

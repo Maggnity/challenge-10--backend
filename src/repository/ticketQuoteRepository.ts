@@ -13,6 +13,7 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
         const createdTicket = await prisma.ticket_quote.create({
             data: {
                 id: data.id,
+                status: data.status,
                 user_id: userID,
                 adults: data.adults,
                 childrens: data.childrens,
@@ -49,7 +50,7 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
             }
         })
 
-        
+
         return updatedTicket
 
     }
@@ -69,6 +70,7 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
 
         const limit = params.limit
         const offset = params.offset
+        const filters = params.filters
 
         const response = await prisma.ticket_quote.findMany({
             where: {
@@ -78,12 +80,26 @@ export class TicketQuoteRepository implements ITicketQuoteRepository {
             skip: offset
         })
 
+        console.log({ filters })
+
         const results = await prisma.ticket_quote.count({
             where: {
-                user_id: userID
-            }
+                user_id: userID,
+                id: filters?.id
+            },
+
         })
 
         return { data: response, results: results }
     };
+
+    async getTicketQuoteById(id: ticket_quote["id"]): Promise<ticket_quote | null> {
+        const response = await prisma.ticket_quote.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return response
+    }
 }
